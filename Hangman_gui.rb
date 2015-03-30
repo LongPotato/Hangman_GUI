@@ -8,13 +8,9 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
   class Hangman
 
-  	attr_accessor :current_word, :turn, :missed, :word
+    attr_accessor :current_word, :turn, :missed, :word
 
-  	def initialize
-  	  
-  	end
-
-  	def new_game
+    def new_game
       RandomWord.exclude_list << /_/
       content = [RandomWord.adjs.next, RandomWord.nouns.next] #generate a random word
       valid_words = content[rand(2)].upcase
@@ -25,7 +21,6 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
       debug(message: "The word is #{@word.join}")
       debug(message: "The current word is #{@current_word.join(' ')}")
-
   	end
 
     def take_guess(input)
@@ -60,24 +55,24 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
   stack  width: 500, height: 500 do
 
-  	stack width: 1.0, height: 0.6 do
-  	  background( "#C4C4C4".."#FAFFFF" )
-  	  @words_field = para @c_word
-  	  @words_field.style(size: "x-large", align: "center", margin_top: 50, weight: "heavy")
+    stack width: 1.0, height: 0.6 do
+      background( "#C4C4C4".."#FAFFFF" )
+      @words_field = para @c_word
+      @words_field.style(size: "x-large", align: "center", margin_top: 50, weight: "heavy")
 
       @turns_field = para "Turn Remaining: #{@c_turn}"
       @turns_field.style(size: 18, align: "center", margin_top: 90)
       
       @missed_field = para "Missed: #{@c_miss}"
       @missed_field.style(size: 18, align: "center")
-
-  	end
+    end
 
   	stack width: 1.0, height: 0.4 do
-  	  background rgb(245, 245, 245)
+      background rgb(245, 245, 245)
 
- 	    flow width: 1.0, height: 0.6 do
+      flow width: 1.0, height: 0.6 do
         ('A'..'Z').each do |letter|
+
           button letter, width: 50, height: 40, align: "center" do
             debug(message: "Button value: #{letter}")
             
@@ -107,22 +102,24 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
                 display_game
               end
             end
-
           end
+
         end
       end
 
-  	  flow margin_left: 100, margin_top: 30 do	 		
-	      button "New Game" do
-	        @action.new_game
+      flow margin_left: 100, margin_top: 30 do	 		
+        button "New Game" do
+          @action.new_game
           display_game
-		    end
-		    button "Save Game" do	
-		    end
-		    button "Load Game" do
-	 	    end
- 	    end		
+        end
+        button "Save Game" do	
+        end
+        button "Load Game" do
+        end
+ 	    end
+
     end
 
   end 
+  
 end
