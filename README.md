@@ -17,7 +17,7 @@ Download executable for:
 
 *Require [Shoes](http://shoesrb.com/downloads/) to interpret the rb file.*
 
-*Shoes installation is included in the file.*
+*Shoes installation is included in the download.*
 
 
 ###Screenshots:
