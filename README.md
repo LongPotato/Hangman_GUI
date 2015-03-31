@@ -17,16 +17,16 @@ Download executable for:
 
 *Require [Shoes](http://shoesrb.com) to interpret the rb file.*
 
-*Shoes installation is included in the file*
+*Shoes installation is included in the file.*
 
 
 ###Screenshots:
 
 
-![](https://raw.github.com/LongPotato/Hangman_GUI/tree/master/pics/Hang_mac.jpg)
+![Mac](https://github.com/LongPotato/Hangman_GUI/blob/master/pics/Hang_mac.jpg)
 
 
-![](https://raw.github.com/LongPotato/Hangman_GUI/tree/master/pics/Hang_win.jpg)
+![Win](https://raw.githubusercontent.com/LongPotato/Hangman_GUI/master/pics/Hang_win.jpg)
 
 
 
