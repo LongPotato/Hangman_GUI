@@ -1,0 +1,10 @@
+/Users/ccoupe/.rvm/rubies/ruby-2.1.5/bin/ruby -r ./siteconf20150110-42728-v8bgub.rb extconf.rb
+
+make "DESTDIR=" clean
+make: *** No rule to make target `clean'.  Stop.
+
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+make "DESTDIR=" install
+make: Nothing to be done for `install'.
