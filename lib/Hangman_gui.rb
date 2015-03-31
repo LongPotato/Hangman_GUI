@@ -18,7 +18,7 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
       @word = valid_words.split('')  
       @current_word = Array.new(@word.size, '_')
       @missed = []
-      @turn = 7 
+      @turn = 10 
 
       debug(message: "The word is #{@word.join}")
       debug(message: "The current word is #{@current_word.join(' ')}")
@@ -39,7 +39,7 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
   #initialize variables:
   @action = Hangman.new
-  @c_turn = 7
+  @c_turn = 10
   @c_miss = ""
   @c_word = ""
   @words_field = nil
@@ -54,14 +54,22 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
     #update the current screen    
     @words_field.replace(@c_word)
-    @turns_field.replace("Turn Remaining: #{@c_turn}")
+
+    if @c_turn < 4
+      @turns_field.replace("Turn Remaining: #{@c_turn}")
+      @turns_field.style(size: 16, stroke: red, align: "center", margin_top: 90)
+    else
+      @turns_field.replace("Turn Remaining: #{@c_turn}")
+      @turns_field.style(size: 16, stroke: black, align: "center", margin_top: 90)
+    end
+
     @missed_field.replace("Missed: #{@c_miss}")
   end
 
   stack  width: 500, height: 500 do
 
     stack width: 1.0, height: 0.6 do
-      background( "#C4C4C4".."#FAFFFF" )
+      background ("#9B9E9E".."#FFFFFF")
       @words_field = para @c_word
       @words_field.style(size: "x-large", align: "center", margin_top: 50, weight: "heavy")
 
@@ -72,8 +80,8 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
       @missed_field.style(size: 16, align: "center")
     end
 
-  	stack width: 1.0, height: 0.4 do
-      background rgb(245, 245, 245)
+    stack width: 1.0, height: 0.4 do
+      background rgb(112, 128, 144)
 
       flow width: 1.0, height: 0.6 do
         ('A'..'Z').each do |letter|   #generate buttons from A-Z
@@ -104,7 +112,7 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
         end
       end
 
-      flow margin_left: 80, margin_top: 15 do			
+      flow margin_left: 85, margin_top: 15 do			
         button "New Game" do
           @action.new_game
           display_game
@@ -123,7 +131,7 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
           @action = YAML::load(game_data)
           display_game
         end
- 	    end
+      end
 
     end
 
