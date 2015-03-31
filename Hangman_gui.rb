@@ -3,6 +3,7 @@ Shoes.setup do
 end
 
 require 'random-word'
+require 'yaml'
 
 Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
@@ -17,7 +18,7 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
       @word = valid_words.split('')  
       @current_word = Array.new(@word.size, '_')
       @missed = []
-      @turn = 10 
+      @turn = 7 
 
       debug(message: "The word is #{@word.join}")
       debug(message: "The current word is #{@current_word.join(' ')}")
@@ -36,8 +37,9 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
 
   end
 
+  #initialize variables:
   @action = Hangman.new
-  @c_turn = 10
+  @c_turn = 7
   @c_miss = ""
   @c_word = ""
   @words_field = nil
@@ -45,9 +47,12 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
   @turns_field = nil
 
   def display_game
+    #get variables info from the class
     @c_turn = @action.turn
     @c_word = @action.current_word.join(' ')
     @c_miss = @action.missed.join(' ')
+
+    #update the current screen    
     @words_field.replace(@c_word)
     @turns_field.replace("Turn Remaining: #{@c_turn}")
     @missed_field.replace("Missed: #{@c_miss}")
@@ -61,31 +66,23 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
       @words_field.style(size: "x-large", align: "center", margin_top: 50, weight: "heavy")
 
       @turns_field = para "Turn Remaining: #{@c_turn}"
-      @turns_field.style(size: 18, align: "center", margin_top: 90)
-      
+      @turns_field.style(size: 16, align: "center", margin_top: 90)
+
       @missed_field = para "Missed: #{@c_miss}"
-      @missed_field.style(size: 18, align: "center")
+      @missed_field.style(size: 16, align: "center")
     end
 
   	stack width: 1.0, height: 0.4 do
       background rgb(245, 245, 245)
 
       flow width: 1.0, height: 0.6 do
-        ('A'..'Z').each do |letter|
+        ('A'..'Z').each do |letter|   #generate buttons from A-Z
 
           button letter, width: 50, height: 40, align: "center" do
             debug(message: "Button value: #{letter}")
             
             @action.take_guess(letter)
-
-            @c_word = @action.current_word.join(' ')
-            @words_field.replace(@c_word)
-
-            @c_miss = @action.missed.join(' ')
-            @missed_field.replace("Missed: #{@c_miss}")
-
-            @c_turn = @action.turn
-            @turns_field.replace("Turn Remaining: #{@c_turn}")
+            display_game
 
             if @c_word.split(' ').none? { |blank| blank == '_' }  #game win if there's no blank left
               if confirm("YOU WIN! \n Replay?")
@@ -107,19 +104,29 @@ Shoes.app(title: "Hangman", width: 500, height: 500, resizable: false) do
         end
       end
 
-      flow margin_left: 100, margin_top: 30 do	 		
+      flow margin_left: 80, margin_top: 15 do			
         button "New Game" do
           @action.new_game
           display_game
         end
-        button "Save Game" do	
+        button "Save Game" do
+          save_as = ask_save_file
+          File.open(save_as, 'w') do |file|
+            file.puts YAML::dump(@action)
+          end
         end
         button "Load Game" do
+          load_file = ask_open_file
+          game_data = File.open(load_file, 'r') do |file| 
+            file.read 
+          end
+          @action = YAML::load(game_data)
+          display_game
         end
  	    end
 
     end
 
   end 
-  
+
 end
