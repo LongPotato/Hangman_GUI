@@ -2,6 +2,8 @@
 
 Simple Hangman game written in Ruby, using the GUI toolkit: [Shoes](http://shoesrb.com)
 
+The command line version can be found [here](https://github.com/LongPotato/Hangman)
+
 ###Features:
 
 * Buttons!
